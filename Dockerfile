@@ -36,7 +36,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" >> /etc
 	apt-key add /pgdg.key && \
 	rm /pgdg.key && \
 	wget $HIVE_DL_URL && \
-	apt-get update && apt-get install postgresql postgresql-contrib
+	apt-get update && apt-get install -y --no-install-recommends postgresql postgresql-contrib && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* && \
 	tar -xzvf apache-hive-$HIVE_VERSION-bin.tar.gz && \
@@ -61,4 +61,4 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 10000
 EXPOSE 10002
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
