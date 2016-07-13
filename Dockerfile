@@ -1,3 +1,5 @@
+# Dockerfile for Apache Hive.
+
 FROM bwv988/hadoop-base
 
 ENV HIVE_VERSION 2.0.0
@@ -25,18 +27,14 @@ ENV YARN_CONF_yarn_resourcemanager_address resourcemanager:8032
 ENV YARN_CONF_yarn_resourcemanager_scheduler_address resourcemanager:8030
 ENV YARN_CONF_yarn_resourcemanager_resource__tracker_address resourcemanager:8031
 
-ADD pgdg.key /pgdg.key
 
 WORKDIR /opt
 
 ENV HIVE_DL_URL http://ftp.heanet.ie/mirrors/www.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
 
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" >> /etc/apt/sources.list.d/pgdg.list && \
-#	wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O pgdg.key && \
-	apt-key add /pgdg.key && \
-	rm /pgdg.key && \
-	wget $HIVE_DL_URL && \
-	apt-get update && apt-get install -y --no-install-recommends postgresql postgresql-contrib && \
+RUN wget $HIVE_DL_URL && \
+	apt-get update && \
+	apt-get install -y --no-install-recommends net-tools libpostgresql-jdbc-java && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* && \
 	tar -xzvf apache-hive-$HIVE_VERSION-bin.tar.gz && \
@@ -47,18 +45,21 @@ ENV HIVE_HOME /opt/hive
 ENV PATH $HIVE_HOME/bin:$PATH
 ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
 
-ADD conf/hive-site.xml $HIVE_HOME/conf
-ADD conf/beeline-log4j2.properties $HIVE_HOME/conf
-ADD conf/hive-env.sh $HIVE_HOME/conf
-ADD conf/hive-exec-log4j2.properties $HIVE_HOME/conf
-ADD conf/hive-log4j2.properties $HIVE_HOME/conf
-ADD conf/ivysettings.xml $HIVE_HOME/conf
-ADD conf/llap-daemon-log4j2.properties $HIVE_HOME/conf
+ADD provision/hive-site.xml $HIVE_HOME/conf
+ADD provision/beeline-log4j2.properties $HIVE_HOME/conf
+ADD provision/hive-env.sh $HIVE_HOME/conf
+ADD provision/hive-exec-log4j2.properties $HIVE_HOME/conf
+ADD provision/hive-log4j2.properties $HIVE_HOME/conf
+ADD provision/ivysettings.xml $HIVE_HOME/conf
+ADD provision/llap-daemon-log4j2.properties $HIVE_HOME/conf
 
-ADD entrypoint.sh /
+# Link the JDBC jar.
+RUN ln -s /usr/share/java/postgresql-jdbc4.jar $HIVE_HOME/lib/postgresql-jdbc4.jar
+
+ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 10000
 EXPOSE 10002
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

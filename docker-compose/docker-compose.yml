@@ -1,0 +1,17 @@
+version: '2'
+services:
+    postgres:
+      image: bwv988/postgres-hive
+      container_name: postgres
+      volumes:
+        - ./data/postgres/etc/postgresql:/etc/postgresql
+        - ./data/postgres/var/log/postgresql:/var/log/postgresql
+        - ./data/postgres/var/lib/postgresql:/var/lib/postgresql
+      ports:
+        - "5432:5432"
+
+    hive:
+      image: bwv988/hadoop-hive
+      depends_on:
+        - postgres 
+      container_name: hive
