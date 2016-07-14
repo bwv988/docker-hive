@@ -27,7 +27,6 @@ ENV YARN_CONF_yarn_resourcemanager_address resourcemanager:8032
 ENV YARN_CONF_yarn_resourcemanager_scheduler_address resourcemanager:8030
 ENV YARN_CONF_yarn_resourcemanager_resource__tracker_address resourcemanager:8031
 
-
 WORKDIR /opt
 
 ENV HIVE_DL_URL http://ftp.heanet.ie/mirrors/www.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
@@ -53,7 +52,7 @@ ADD provision/hive-log4j2.properties $HIVE_HOME/conf
 ADD provision/ivysettings.xml $HIVE_HOME/conf
 ADD provision/llap-daemon-log4j2.properties $HIVE_HOME/conf
 
-# Link the JDBC jar.
+# Link the Postgres JDBC jar.
 RUN ln -s /usr/share/java/postgresql-jdbc4.jar $HIVE_HOME/lib/postgresql-jdbc4.jar
 
 ADD entrypoint.sh /entrypoint.sh

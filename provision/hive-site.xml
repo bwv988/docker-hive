@@ -41,4 +41,12 @@
       <name>datanucleus.autoCreateSchema</name>
       <value>false</value>
     </property>
+
+    <property>
+      <name>hive.zookeeper.quorum</name>
+      <description>Zookeeper quorum used by Hive's Table Lock Manager</description>
+      <value>zookeeper:2181</value>
+    </property>
+
+    <!-- Not adding thrift server uri here means we're using the embedded thrift server. -->
 </configuration>

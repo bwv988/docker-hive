@@ -1,17 +1,23 @@
 version: '2'
 services:
+    zookeeper:
+      image: bwv988/zookeeper
+      container_name: zookeeper
+      ports:
+        - "2181:2181"
+
     postgres:
       image: bwv988/postgres-hive
       container_name: postgres
-      volumes:
-        - ./data/postgres/etc/postgresql:/etc/postgresql
-        - ./data/postgres/var/log/postgresql:/var/log/postgresql
-        - ./data/postgres/var/lib/postgresql:/var/lib/postgresql
       ports:
         - "5432:5432"
 
     hive:
       image: bwv988/hadoop-hive
       depends_on:
-        - postgres 
+        - zookeeper
+        - postgres
       container_name: hive
+      ports:
+        - "10000:10000"
+        - "10002:10002"
