@@ -44,18 +44,18 @@ ENV HIVE_HOME /opt/hive
 ENV PATH $HIVE_HOME/bin:$PATH
 ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
 
-ADD provision/hive-site.xml $HIVE_HOME/conf
-ADD provision/beeline-log4j2.properties $HIVE_HOME/conf
-ADD provision/hive-env.sh $HIVE_HOME/conf
-ADD provision/hive-exec-log4j2.properties $HIVE_HOME/conf
-ADD provision/hive-log4j2.properties $HIVE_HOME/conf
-ADD provision/ivysettings.xml $HIVE_HOME/conf
-ADD provision/llap-daemon-log4j2.properties $HIVE_HOME/conf
+COPY provision/hive-site.xml $HIVE_HOME/conf
+COPY provision/beeline-log4j2.properties $HIVE_HOME/conf
+COPY provision/hive-env.sh $HIVE_HOME/conf
+COPY provision/hive-exec-log4j2.properties $HIVE_HOME/conf
+COPY provision/hive-log4j2.properties $HIVE_HOME/conf
+COPY provision/ivysettings.xml $HIVE_HOME/conf
+COPY provision/llap-daemon-log4j2.properties $HIVE_HOME/conf
 
 # Link the Postgres JDBC jar.
 RUN ln -s /usr/share/java/postgresql-jdbc4.jar $HIVE_HOME/lib/postgresql-jdbc4.jar
 
-ADD entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 10000

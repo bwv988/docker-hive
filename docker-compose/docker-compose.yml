@@ -1,3 +1,5 @@
+# This is provided purely for testing purposes.
+
 version: '2'
 services:
     zookeeper:
