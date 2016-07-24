@@ -35,9 +35,9 @@ RUN ln -s /usr/share/java/postgresql-jdbc4.jar $HIVE_HOME/lib/postgresql-jdbc4.j
 COPY hive-entrypoint.sh /entrypoints/hive-entrypoint.sh
 COPY hadoop_config.sh /hadoop_config.sh
 COPY service_wait.sh /service_wait.sh
-RUN chmod +x /entrypoints/hive-entrypoint.sh
-RUN chmod +x /hadoop_config.sh
-RUN chmod +x /service_wait.sh
+RUN chmod +x /entrypoints/hive-entrypoint.sh && \
+	chmod +x /hadoop_config.sh && \
+	chmod +x /service_wait.sh
 
 EXPOSE 10000
 EXPOSE 10002
