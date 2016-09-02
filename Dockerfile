@@ -2,7 +2,7 @@
 
 FROM analytics/hadoop-base
 
-ENV HIVE_VERSION 2.0.0
+ENV HIVE_VERSION 1.2.1
 
 WORKDIR /opt
 
@@ -21,23 +21,21 @@ ENV HIVE_HOME /opt/hive
 ENV PATH $HIVE_HOME/bin:$PATH
 ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
 
-COPY provision/hive-site.xml $HIVE_HOME/conf
-COPY provision/beeline-log4j2.properties $HIVE_HOME/conf
-COPY provision/hive-env.sh $HIVE_HOME/conf
-COPY provision/hive-exec-log4j2.properties $HIVE_HOME/conf
-COPY provision/hive-log4j2.properties $HIVE_HOME/conf
-COPY provision/ivysettings.xml $HIVE_HOME/conf
-COPY provision/llap-daemon-log4j2.properties $HIVE_HOME/conf
+COPY files/hive-site.xml $HIVE_HOME/conf
+COPY files/beeline-log4j2.properties $HIVE_HOME/conf
+COPY files/hive-env.sh $HIVE_HOME/conf
+COPY files/hive-exec-log4j2.properties $HIVE_HOME/conf
+COPY files/hive-log4j2.properties $HIVE_HOME/conf
+COPY files/ivysettings.xml $HIVE_HOME/conf
+COPY files/llap-daemon-log4j2.properties $HIVE_HOME/conf
 
 # Link the Postgres JDBC jar.
 RUN ln -s /usr/share/java/postgresql-jdbc4.jar $HIVE_HOME/lib/postgresql-jdbc4.jar
 
-COPY hive-entrypoint.sh /entrypoints/hive-entrypoint.sh
-COPY hadoop_config.sh /hadoop_config.sh
-COPY service_wait.sh /service_wait.sh
+COPY files/hive-entrypoint.sh /entrypoints/hive-entrypoint.sh
+COPY files/service_wait.sh /entrypoints/service_wait.sh
 RUN chmod +x /entrypoints/hive-entrypoint.sh && \
-	chmod +x /hadoop_config.sh && \
-	chmod +x /service_wait.sh
+	chmod +x /entrypoints/service_wait.sh
 
 EXPOSE 10000
 EXPOSE 10002
