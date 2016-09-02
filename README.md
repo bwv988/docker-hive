@@ -1,10 +1,12 @@
 # Apache Hive in a Docker container
 
-## Introduction
+## About
 
 - Runs HiveServer 2
-- Multi-entry docker
-- Wrapper scripts for Beeline and Hive (deprecated) CLIs.
-- Configured for PostgreSQL as Metastore
+- PostgreSQL is used as Metastore DB.
 
-## Usage examples
+Check out <https://github.com/bwv988/datascience-docker-sandbox> for usage examples.
+
+## Version
+
+Hive 1.2.1
