@@ -1,5 +1,7 @@
 # Apache Hive in a Docker container
 
+[![Build Status](https://api.travis-ci.org/bwv988/docker-hive.svg?branch=master)](https://api.travis-ci.org/bwv988/docker-hive.svg?branch=master)
+
 ## About
 
 - Runs HiveServer 2
