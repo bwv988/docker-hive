@@ -11,4 +11,4 @@ Check out <https://github.com/bwv988/datascience-playground> for usage examples.
 
 ## Version
 
-Hive 1.2.1
+Hive 1.2.2
